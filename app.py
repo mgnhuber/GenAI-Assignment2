@@ -73,10 +73,18 @@ def resolve_transcript(args: argparse.Namespace) -> str:
 
 
 def load_instructions(path: str) -> str:
-    instructions = load_text_file(path)
-    if not instructions:
+    content = load_text_file(path)
+    if not content:
         raise ValueError(f"Instructions file is empty: {path}")
-    return instructions
+
+    marker = "## Current Production Prompt"
+    if marker not in content:
+        return content
+
+    section = content.split(marker, 1)[1].strip()
+    if not section:
+        raise ValueError(f"No prompt text found after marker in: {path}")
+    return section
 
 
 def load_env_file(path: str) -> None:
@@ -139,15 +147,13 @@ def extract_text(response_json: dict) -> str:
     return "\n".join(parts).strip()
 
 
-def parse_model_json(model_text: str) -> dict:
+def parse_model_json(model_text: str):
     return json.loads(model_text)
 
 
-def print_summary(result: dict, output_path: Path) -> None:
-    print("=== Workflow Summary ===")
-    print("Task: Meeting transcript -> action items")
-    print(f"Saved Output: {output_path}")
-    print()
+def print_result_block(result: dict, label: str | None = None) -> None:
+    if label:
+        print(label)
 
     print("=== Action Items ===")
     action_items = result.get("action_items", [])
@@ -172,6 +178,32 @@ def print_summary(result: dict, output_path: Path) -> None:
     else:
         for note in notes:
             print(f"- {note}")
+
+
+def print_summary(result, output_path: Path) -> None:
+    print("=== Workflow Summary ===")
+    print("Task: Meeting transcript -> action items")
+    print(f"Saved Output: {output_path}")
+    print()
+
+    if isinstance(result, dict):
+        print_result_block(result)
+        return
+
+    if isinstance(result, list):
+        print(f"Detected {len(result)} result set(s).")
+        print()
+        for index, item in enumerate(result, start=1):
+            if not isinstance(item, dict):
+                print(f"=== Result {index} ===")
+                print("Unexpected non-object result.")
+                print()
+                continue
+            print_result_block(item, label=f"=== Result {index} ===")
+            print()
+        return
+
+    print("Unexpected output format. See the saved JSON file for details.")
 
 
 def main() -> int:
