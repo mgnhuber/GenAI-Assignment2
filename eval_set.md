@@ -40,19 +40,30 @@ A good output should identify that tasks are mentioned but ownership is unclear.
 **Input**
 
 Cross-Functional Meeting Transcript:
-"Engineering will fix the login timeout bug before the next release. Design will deliver the updated mobile mockups by Thursday. Customer Success should prepare a short FAQ for known onboarding issues. Marcus is responsible for sending the final release notes to leadership."
+"Engineering will fix the login timeout bug before the next release. Design will deliver the updated mobile mockups by Thursday. Gina and Heather from Customer Success should prepare a short FAQ for known onboarding issues. Marcus is responsible for sending the final release notes to leadership. Can someone please set up a follow up meeting for Wednesday morning?"
 
 **What a good output should do**
 
-A good output should capture both team-owned and individually owned action items, preserve the different owners correctly, and keep the action descriptions specific and concise.
+A good output should capture team-owned, individually owned, and multi-ownership action items, preserve the different owners correctly, and keep the action descriptions specific and concise.
 
 ## Case 5: Human Review Needed Case
 
 **Input**
 
 Messy Transcript:
-"I think Nina said she could maybe take the vendor contract follow-up, unless legal already owns that. Ben was going to send the revised timeline, or maybe that was for next month. Anyway, we need the security questionnaire completed before procurement can move."
+"I think Nina said she could maybe take the vendor contract follow-up, unless legal already owns that. Ben was going to send the revised timeline, or maybe that was for next month. George called the client but they said they need him to call back later. Anyway, we need the security questionnaire completed before procurement can move."
 
 **What a good output should do**
 
 A good output should separate clear tasks from uncertain ones, preserve ambiguity where the transcript is unclear, and signal that some assignments or deadlines need human confirmation instead of confidently guessing.
+
+## Case 6: Mulitple Speakers
+
+**Input**
+
+Multi-Speaker Transcript:
+"I want someone to follow up on the customer list by Thursday mid day. David can you do it?" "No, sorry I am out the rest of the week for a wedding." "Ok, Lisa can you do it" "Yes I can do that."
+
+**What a good output should do**
+
+A good output should identify the final owner of the task and assign it to them, rather than to the first person asked or to nobody.
